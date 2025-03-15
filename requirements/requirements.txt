@@ -1,0 +1,9 @@
+pygame==2.5.2
+numpy==1.24.3
+gymnasium==0.29.1
+torch==2.2.0
+matplotlib==3.8.2
+pandas==2.1.4
+pytest==7.4.3
+black==23.12.1
+flake8==7.0.0 

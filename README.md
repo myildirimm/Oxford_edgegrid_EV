@@ -1,32 +1,33 @@
-# EV Charging Coordination Environment
+# Electric Vehicle Charging Simulation in Oxford
 
-A PyGame-based environment for coordinating electric vehicle (EV) charging using multi-agent reinforcement learning.
+This project simulates electric vehicles moving around Oxford city, managing their battery levels, and interacting with charging stations. The simulation includes power plants and solar panels to model the energy infrastructure.
 
 ## Features
 
-- Real-time visualization of EV charging states
-- Dynamic electricity pricing based on time-of-day and renewable availability
-- Grid load monitoring and transformer capacity constraints
-- Smart charging policy considering multiple factors:
-  - Renewable energy availability
-  - Electricity prices
-  - Grid stability
-  - Individual EV constraints (departure time, charging power limits)
+- Real-time visualization of vehicles moving through Oxford's road network
+- Dynamic battery management and charging station interactions
+- Realistic vehicle movement with energy consumption
+- Power infrastructure simulation including charging stations, power plants, and solar panels
+- Interactive map with vehicle routes and infrastructure locations
+- Vehicle status monitoring including battery levels and charging states
+
+## Requirements
+
+- Python 3.8+
+- Required packages listed in `requirements.txt`
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/ev-charging-coordination.git
-cd ev-charging-coordination
+git clone https://github.com/yourusername/oxford-ev-simulation.git
+cd oxford-ev-simulation
 ```
 
-2. Create and activate a virtual environment:
+2. Create a virtual environment (optional but recommended):
 ```bash
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# or
-.\venv\Scripts\activate  # Windows
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 3. Install dependencies:
@@ -38,35 +39,41 @@ pip install -r requirements.txt
 
 Run the simulation:
 ```bash
-python src/example.py
+python city_simulation.py
 ```
 
-The visualization shows:
-- Individual EV states (State of Charge, Time until departure, Charging power limit)
-- Grid metrics (Renewable availability, Electricity price, Grid load)
-- Real-time simulation of charging coordination
+The simulation will:
+1. Create a map of Oxford city center
+2. Initialize vehicles, charging stations, power plants, and solar panels
+3. Run the simulation steps
+4. Generate HTML files for each simulation step showing the current state
 
-## Project Structure
+## Simulation Components
 
-```
-.
-├── src/
-│   ├── environment.py    # Main environment implementation
-│   └── example.py        # Example usage and visualization
-├── tests/                # Test files
-├── docs/                 # Documentation
-├── requirements.txt      # Project dependencies
-└── README.md            # This file
-```
+### Vehicles
+- Simulated electric vehicles with realistic battery consumption
+- Dynamic route planning and charging station seeking behavior
+- Visual indicators for vehicle status (moving, charging, stranded)
+
+### Charging Stations
+- Multiple charging stations across the city
+- Dynamic availability status
+- Charging speed and capacity limitations
+
+### Power Infrastructure
+- Power plants with variable output
+- Solar panels with day/night cycle efficiency
+- Real-time power demand and supply simulation
+
+## Visualization
+
+The simulation creates an interactive map showing:
+- Vehicles with their current routes and status
+- Charging stations (available/occupied)
+- Power plants and solar panels
+- Real-time battery levels and charging status
+- Color-coded vehicle routes
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details. 
+Feel free to submit issues and enhancement requests! 

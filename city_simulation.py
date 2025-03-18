@@ -11,14 +11,14 @@ class Vehicle:
         self.id = vehicle_id
         self.position = position  # (lat, lon)
         self.battery_capacity = battery_capacity
-        self.battery_level = random.uniform(0.4, 0.9) * battery_capacity  # Start with more charge
+        self.battery_level = random.uniform(0.6, 0.9) * battery_capacity  # Start with 60-90% charge
         self.route = []
         self.charging = False
         self.next_destination = None
         self.route_nodes = []  # Store the route as graph nodes
         self.current_route_index = 0
         self.speed = 30  # km/h average speed
-        self.energy_consumption = 0.05  # Reduced from 0.2 to 0.05 kWh per km
+        self.energy_consumption = 0.02  # Reduced from 0.05 to 0.02 kWh per km for slower discharge
         self.progress = 0.0  # Progress between current and next point (0.0 to 1.0)
         self.stranded = False  # New flag to indicate if vehicle has run out of battery
         # Assign a unique color to each vehicle with more distinct colors
@@ -206,11 +206,11 @@ class OxfordCitySimulation:
                             )
                             # Calculate if vehicle can make it to the charging station
                             total_distance = sum(
-                                ox.distance.great_circle(
+                                ox.distance.great_circle_vec(
                                     lat1=self.city_graph.nodes[route[i]]['y'],
-                                    lon1=self.city_graph.nodes[route[i]]['x'],
+                                    lng1=self.city_graph.nodes[route[i]]['x'],
                                     lat2=self.city_graph.nodes[route[i+1]]['y'],
-                                    lon2=self.city_graph.nodes[route[i+1]]['x']
+                                    lng2=self.city_graph.nodes[route[i+1]]['x']
                                 )
                                 for i in range(len(route)-1)
                             )
@@ -241,11 +241,11 @@ class OxfordCitySimulation:
                 next_pos = vehicle.route[vehicle.current_route_index + 1]
                 
                 # Calculate energy needed for next step
-                distance = ox.distance.great_circle(
+                distance = ox.distance.great_circle_vec(
                     lat1=current_pos[0],
-                    lon1=current_pos[1],
+                    lng1=current_pos[1],
                     lat2=next_pos[0],
-                    lon2=next_pos[1]
+                    lng2=next_pos[1]
                 )
                 energy_needed = distance * vehicle.energy_consumption
                 
@@ -305,11 +305,11 @@ class OxfordCitySimulation:
             
         # Calculate distances using unpacked coordinates
         distances = [
-            ox.distance.great_circle(
+            ox.distance.great_circle_vec(
                 lat1=vehicle.position[0],
-                lon1=vehicle.position[1],
+                lng1=vehicle.position[1],
                 lat2=station.position[0],
-                lon2=station.position[1]
+                lng2=station.position[1]
             )
             for station in available_stations
         ]
@@ -454,13 +454,7 @@ class OxfordCitySimulation:
             else:
                 icon = '🔋' if vehicle.charging else '🚙'
             
-            icon_html = f'''
-                <div style="font-size: 24px; text-align: center;">
-                    <span style="color: {vehicle.color};">{icon}</span>
-                </div>
-            '''
-            
-            # Create status message
+            # Define status message
             if vehicle.stranded:
                 status = "Out of battery!"
             elif vehicle.charging:
@@ -468,6 +462,12 @@ class OxfordCitySimulation:
             else:
                 status = "Moving"
             
+            # Create marker with colored icon
+            icon_html = f'''
+                <div style="font-size: 24px; text-align: center;">
+                    <span style="color: {vehicle.color};">{icon}</span>
+                </div>
+            '''
             folium.DivIcon(
                 html=icon_html
             ).add_to(folium.Marker(

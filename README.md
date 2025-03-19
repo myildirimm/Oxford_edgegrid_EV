@@ -20,7 +20,7 @@ This project simulates electric vehicles moving around Oxford city, managing the
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/oxford-ev-simulation.git
+git clone https://github.com/myildirimm/oxford-ev-simulation.git
 cd oxford-ev-simulation
 ```
 

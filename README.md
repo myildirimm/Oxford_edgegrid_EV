@@ -24,7 +24,7 @@ git clone https://github.com/myildirimm/oxford-ev-simulation.git
 cd oxford-ev-simulation
 ```
 
-2. Create a virtual environment (optional but recommended):
+2. Create a virtual environment:
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
